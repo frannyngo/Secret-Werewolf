@@ -1,45 +1,47 @@
 const users = [];
 
-const addUser = ({ id, username, roomName }) => {
+const addUser = ({ token, username, roomName }) => {
 
     const existingUser = users.find((user) => {
-        user.room === roomName & user.name === username
+        user.token === token && user.username === username && user.roomName === roomName
     });
 
         if (existingUser) {
             return { error: 'Username taken'}
         }
 
-        const user = { id, roomName, username } ;
-        return { user }
+        const user = { token, username, roomName } ;
+        return  user 
 }
 
-const removeUser = (id) => {
-    const index = users.findIndex((user) => {
-        user.id === id
+// const removeUser = (id) => {
+//     const index = users.findIndex((user) => {
+//         user.id === id
 
-        if (index !== -1) {
-            return users.splice(index, 1)[0];
-        }
-    });
-}
+//         if (index !== -1) {
+//             return users.splice(index, 1)[0];
+//         }
+//     });
+// }
 
-const getUser = (id) => {
-    users.find((user) => {
-        if (user.id === id) {
-            return user;
-        }
-    });
-}
+// const getUser = (id) => {
+//     users.find((user) => {
+//         if (user.id === id) {
+//             return user;
+//         } else {
+//             console.log('cant find user')
+//         }
+//     });
+// }
 
-const getUserInRoom = (roomName) => {
+const getUsers = (roomName) => {
     users.filter((user) => {
         user.roomName === roomName
     });
 }
 
 
-module.exports = { addUser, removeUser, getUser, getUserInRoom }
+module.exports = { addUser, getUsers }
 
 
 

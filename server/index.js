@@ -8,10 +8,8 @@ const jwt = require('jsonwebtoken');
 const usersRoute = require('./routes/users.js');
 
 //--------------------SOCKET--------------------------------->
-const { addUser, removeUser, getUser } = require('./socketHelpers');
+const { addUser, removeUser, getUser, getUsers } = require('./socketHelpers');
 const http = require('http');
-const { callbackify } = require('util');
-const { Console } = require('console');
 const server = http.createServer(app);
 var io = require('socket.io')(server, {
     cors: {
@@ -21,37 +19,25 @@ var io = require('socket.io')(server, {
 });
 
 io.on('connection', (socket) => {
-  console.log('Socket Connected!');
 // ------------------JOIN------------------------------------------>
 
-    socket.on('join', ({ username, roomName }, callBack) => {
-        console.log(username, roomName);
+    socket.on('join', ({ username, roomName, token }) => {
+            socket.emit('message', ({ user: 'admin', text: `${username}, welcome to the ${roomName} room!` }));
+            addUser({ username: username, token: token, roomName: roomName})
 
-        const { error, user } = addUser({ id: socket.id, roomName, username });
 
-        if (error) return callBack(error);
-
-            socket.emit('message', { user: 'admin', text: `${user.username}, welcome to the ${user.roomName} room!` });
-            socket.broadcast.to(roomName).emit('message', { user: 'admin', text: `${user.username} has joined!` });
-            socket.join(user.roomName)
-
-        callBack();
+            const users = getUsers(roomName);
+            socket.emit('message', ({ user:'admin', text:`Players in ${roomName} room : ${users.username}` }));
     });
+
 // ------------------DISCONNECT------------------------------------------>
 
-    socket.on('disconnected', ({ username }) => {
-        console.log(`${username} disconnected!`);
-      });
+    socket.on('disconnected', (message) => io.emit('message', { user: 'admin', text: message }));
+  
 
 // ------------------SEND MESSAGE------------------------------------------>
-    socket.on('sendMessage', (message) => {
-        console.log(socket.id)
-        const user = getUser({ id: socket.id })
-        console.log(user)
-        io.emit('message', message);
-        // to(roomName)
-    });
-
+    socket.on('sendMessage', (message) => io.emit('message', message));
+      
 });
 
 //----------------------------------------------------->
