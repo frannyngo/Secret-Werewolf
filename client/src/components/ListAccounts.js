@@ -7,13 +7,58 @@ const AccountShowList = ({ token }) => {
 
     const getAccounts = async() => {
         try {
-            const response = await fetch('http://localhost:5000/accounts');
+            const response = await fetch('http://localhost:5000/leaderboard');
             const jsonData = await response.json();
 
             setAccounts(jsonData);
         } catch (error) {
             console.log(error);
         }
+    };
+
+    const Redirect = (e) => {
+        e.preventDefault()
+        const gettingAccounts = async() => {
+            try {
+                const response = await fetch('http://localhost:5000/leaderboard');
+                const jsonData = await response.json();
+    
+                setAccounts(jsonData);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        gettingAccounts();
+    };
+
+    const KillList= (e) => {
+        e.preventDefault()
+        const SubmitKills = async() => {
+                try {
+                    const response = await fetch('http://localhost:5000/leaderboard/kills');
+                    const jsonData = await response.json();
+        
+                    setAccounts(jsonData);
+                } catch (error) {
+                    console.log(error);
+                }
+        };
+        SubmitKills();
+    };
+
+    const GameList= (e) => {
+        e.preventDefault()
+        const SubmitGames = async() => {
+            try {
+                const response = await fetch('http://localhost:5000/leaderboard/games');
+                const jsonData = await response.json();
+
+                setAccounts(jsonData);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        SubmitGames();
     };
 
     useEffect(() => {
@@ -25,13 +70,28 @@ const AccountShowList = ({ token }) => {
     }
 
     return (
-        <div className="leaderboard">
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
+    <div className='leaderboardPage'>
+        <div className='leaderboardButtons'>
+            <button className="btn btn-background-circle"
+                onClick={Redirect}
+                >
+                Wins 
+            </button>
+            &nbsp;&nbsp;
+            <button className="btn btn-background-circle"
+                onClick={KillList}
+                >
+                Kills
+            </button>
+            &nbsp;&nbsp;
+            <button className="btn btn-background-circle"
+                onClick={GameList}
+                >
+                Games
+            </button>
+        </div>
+
+        <div className="leaderboards">
             <th> 
                 Username:
             </th>
@@ -92,6 +152,7 @@ const AccountShowList = ({ token }) => {
                 }
             </tbody>
         </div>
+    </div>
     );
 }
 

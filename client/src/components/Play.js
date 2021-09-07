@@ -44,7 +44,13 @@ const Play = ({ token, inGame, setInGame, setWin, setUserKills, userKills }) => 
     const [ p5, setP5 ] = useState({ id: '' }); 
     const [ p6, setP6 ] = useState({ id: '' }); 
     const [ isAlert, setIsAlert ] = useState(false);
-
+    const [ vp1, setVP1 ] = useState(0);
+    const [ vp2, setVP2 ] = useState(0);
+    const [ vp3, setVP3 ] = useState(0);
+    const [ vp4, setVP4 ] = useState(0);
+    const [ vp5, setVP5 ] = useState(0);
+    const [ vp6, setVP6 ] = useState(0);
+    const [ vp7, setVP7 ] = useState(0);
 
     // console.log(playersRemaining.length)
 
@@ -57,7 +63,7 @@ const Play = ({ token, inGame, setInGame, setWin, setUserKills, userKills }) => 
 
     let history = useHistory();
     setWin(null);
-
+    console.log(playersRemaining)
     const Select = (e) => {
 
         const pp1 = document.getElementById('Simon');
@@ -73,6 +79,13 @@ const Play = ({ token, inGame, setInGame, setWin, setUserKills, userKills }) => 
         setP4(pp4);
         setP5(pp5);
         setP6(pp6);
+    
+        setVP1(0);
+        setVP2(0);
+        setVP3(0);
+        setVP4(0);
+        setVP5(0);
+        setVP6(0);
 
         const selected = e.target.id;
 
@@ -86,8 +99,35 @@ const Play = ({ token, inGame, setInGame, setWin, setUserKills, userKills }) => 
                 for (let i = 0; i <= cpuVotes.length - 1; i++) {
                     let random = playersRemaining[Math.floor((Math.random() * playersRemaining.length))];
                     votes.push(random);
-                    console.log(`random votes: ${random}`);
-                }
+                    
+                    // console.log(`v: ${random}`);
+                    // console.log(pp1.id);
+                    // console.log(pp2.id);
+                    // console.log(pp3.id);
+                    // console.log(pp4.id);
+                    // console.log(pp5.id);
+                    // console.log(pp6.id);
+
+                    // if (random === pp1.id) {
+                    //     setVP1(vp1 + 1);
+                    // }
+                    // else if (random === pp2.id) {
+                    //     setVP2(vp2 + 1);
+                    // }
+                    // else if (random === pp3.id) {
+                    //     setVP3(vp3 + 1);
+                    // }
+                    // else if (random === pp4.id) {
+                    //     setVP4(vp4 + 1);
+                    // }
+                    // else if (random == pp5.id) {
+                    //     setVP5(vp5 + 1);
+                    // }
+                    // else if (random === pp6.id) {
+                    //     setVP6(vp6 + 1);
+                    // } 
+                    
+                };
                 votes.push(selected);
                 setLogVotes(votes);
                 
@@ -137,7 +177,7 @@ const Play = ({ token, inGame, setInGame, setWin, setUserKills, userKills }) => 
                             };
                         }
                     }
-                    
+
                 setMorningPhase(false);
                 setNightPhase(true);
             }
@@ -225,6 +265,7 @@ const Play = ({ token, inGame, setInGame, setWin, setUserKills, userKills }) => 
             setInGame(true);
 
             setUserKills(0);
+
         });
     }, [])
 
@@ -301,6 +342,9 @@ const Play = ({ token, inGame, setInGame, setWin, setUserKills, userKills }) => 
 
                 <div className='container'>
                     <div className='card'>
+                        <p className='counter'>
+                            {vp1}
+                        </p>
                         <div className='image'>
                             { p1.disabled? 
                                 morningPhase? 
@@ -334,6 +378,9 @@ const Play = ({ token, inGame, setInGame, setWin, setUserKills, userKills }) => 
                     </div>
 
                     <div className='card'>
+                        <p className='counter'>
+                            {vp2}
+                        </p>
                         <div className='image'>
                             { p2.disabled? 
                                 morningPhase?
@@ -368,6 +415,9 @@ const Play = ({ token, inGame, setInGame, setWin, setUserKills, userKills }) => 
                     </div>
                     
                     <div className='card'>
+                        <p className='counter'>
+                            {vp3}
+                        </p>
                         <div className='image'>
                             { p3.disabled? 
                                 morningPhase?
@@ -401,6 +451,9 @@ const Play = ({ token, inGame, setInGame, setWin, setUserKills, userKills }) => 
                     </div>
 
                     <div className='card'>
+                        <p className='counter'>
+                            {vp4}
+                        </p>
                         <div className='image'>
                             { p4.disabled? 
                                 morningPhase?
@@ -434,6 +487,9 @@ const Play = ({ token, inGame, setInGame, setWin, setUserKills, userKills }) => 
                     </div>
                     
                     <div className='card'>
+                        <p className='counter'>
+                            {vp5}
+                        </p>
                         <div className='image'>
                             { p5.disabled? 
                                     morningPhase?
@@ -468,6 +524,9 @@ const Play = ({ token, inGame, setInGame, setWin, setUserKills, userKills }) => 
                     </div>
 
                     <div className='card'>
+                       <p className='counter'>
+                            {vp6}
+                        </p>
                         <div className='image'>
                             { p6.disabled? 
                                 morningPhase?

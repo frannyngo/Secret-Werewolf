@@ -58,7 +58,6 @@ useEffect(() => {
 
     });
 
-
     socket.on('message', (message) => {
         const messagez = messages
         messagez.push({user: message.username, text: message.text })

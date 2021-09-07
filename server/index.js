@@ -103,6 +103,7 @@ app.get('/accounts', async (request, response) => {
         .select('*')
         .where('total_wins', '>', zero)
         .orderBy('total_wins', 'desc')
+        .limit(5)
         .then(data => {
             response.send(data);
         });
@@ -111,6 +112,53 @@ app.get('/accounts', async (request, response) => {
     }
 });
 
+app.get('/leaderboard', async (request, response) => {
+    const zero = 0;
+    try {
+        knex('account')
+        .select('*')
+        .where('total_wins', '>', zero)
+        .orderBy('total_wins', 'desc')
+        .limit(15)
+        .then(data => {
+            response.send(data);
+        });
+    } catch (error) {
+        console.log(error.message); 
+    }
+});
+
+app.get('/leaderboard/kills', async (request, response) => {
+    const zero = 0;
+    try {
+        knex('account')
+        .select('*')
+        .where('total_kills', '>', zero)
+        .orderBy('total_kills', 'desc')
+        .limit(15)
+        .then(data => {
+            response.send(data);
+        });
+    } catch (error) {
+        console.log(error.message); 
+    }
+});
+
+app.get('/leaderboard/games', async (request, response) => {
+    const zero = 0;
+    try {
+        knex('account')
+        .select('*')
+        .where('total_games', '>', zero)
+        .orderBy('total_games', 'desc')
+        .limit(15)
+        .then(data => {
+            response.send(data);
+        });
+    } catch (error) {
+        console.log(error.message); 
+    }
+});
 
 // update account
 app.put('/postgame/me', async (request, response) => {
