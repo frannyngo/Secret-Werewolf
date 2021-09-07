@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import background from './img/wallpaper.png';
 
 const Home = ({ token, setToken }) => {
 
@@ -9,7 +9,7 @@ const Home = ({ token, setToken }) => {
     };
     
     return (
-        <div className='homebody'>
+        <div className='homebody' style={{ backgroundImage: `url(${background})` }}>
             <ul>
                 { !token? 
                 <>

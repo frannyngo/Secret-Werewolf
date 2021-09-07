@@ -25,9 +25,7 @@ io.on('connection', (socket) => {
             socket.emit('message', ({ user: 'admin', text: `${username}, welcome to the ${roomName} room!` }));
             addUser({ username: username, token: token, roomName: roomName})
 
-
-            const users = getUsers(roomName);
-            socket.emit('message', ({ user:'admin', text:`Players in ${roomName} room : ${users.username}` }));
+            socket.emit('message', ({ user:'admin', text:`Players in ${roomName} room : ${getUsers(roomName)}` }));
     });
 
 // ------------------DISCONNECT------------------------------------------>

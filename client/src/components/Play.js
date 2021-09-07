@@ -58,7 +58,7 @@ const Play = ({ token, inGame, setInGame, setWin, setUserKills, userKills }) => 
         setIsAlert(true);
         setTimeout(() => {
             setIsAlert(false)
-        }, 4000)
+        }, 3000)
     }   
 
     let history = useHistory();
@@ -100,7 +100,7 @@ const Play = ({ token, inGame, setInGame, setWin, setUserKills, userKills }) => 
                     let random = playersRemaining[Math.floor((Math.random() * playersRemaining.length))];
                     votes.push(random);
                     
-                    // console.log(`v: ${random}`);
+                    console.log(`v: ${random}`);
                     // console.log(pp1.id);
                     // console.log(pp2.id);
                     // console.log(pp3.id);
@@ -108,24 +108,24 @@ const Play = ({ token, inGame, setInGame, setWin, setUserKills, userKills }) => 
                     // console.log(pp5.id);
                     // console.log(pp6.id);
 
-                    // if (random === pp1.id) {
-                    //     setVP1(vp1 + 1);
-                    // }
-                    // else if (random === pp2.id) {
-                    //     setVP2(vp2 + 1);
-                    // }
-                    // else if (random === pp3.id) {
-                    //     setVP3(vp3 + 1);
-                    // }
-                    // else if (random === pp4.id) {
-                    //     setVP4(vp4 + 1);
-                    // }
-                    // else if (random == pp5.id) {
-                    //     setVP5(vp5 + 1);
-                    // }
-                    // else if (random === pp6.id) {
-                    //     setVP6(vp6 + 1);
-                    // } 
+                    if (random === pp1.id) {
+                        setVP1(vp1 + 1);
+                    }
+                    else if (random === pp2.id) {
+                        setVP2(vp2 + 1);
+                    }
+                    else if (random === pp3.id) {
+                        setVP3(vp3 + 1);
+                    }
+                    else if (random === pp4.id) {
+                        setVP4(vp4 + 1);
+                    }
+                    else if (random == pp5.id) {
+                        setVP5(vp5 + 1);
+                    }
+                    else if (random === pp6.id) {
+                        setVP6(vp6 + 1);
+                    } 
                     
                 };
                 votes.push(selected);

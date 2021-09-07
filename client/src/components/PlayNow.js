@@ -40,6 +40,7 @@
                             Single
                     </button>
                 </div>
+                &nbsp;&nbsp;&nbsp;&nbsp;
                 <div className='card'>
                     <div className='image'>
                         <img src={Multiplayer} alt='single' />
