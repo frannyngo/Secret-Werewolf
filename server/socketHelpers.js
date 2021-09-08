@@ -1,16 +1,12 @@
 const users = [];
 
 const addUser = ({ token, username, roomName }) => {
+    console.log('ADDUSER', users)
+        if (!username) return 
+        
+        if (getUser(token)) return
 
-    const existingUser = users.find((user) => {
-        user.token === token && user.username === username && user.roomName === roomName
-    });
-
-        if (existingUser) {
-            return { error: 'Username taken'}
-        }
-
-        const user = { token, username, roomName } ;
+        const user = { username: username, token: token, roomName: roomName } ;
         users.push(user)
 }
 
@@ -24,24 +20,28 @@ const addUser = ({ token, username, roomName }) => {
 //     });
 // }
 
-// const getUser = (id) => {
-//     users.find((user) => {
-//         if (user.id === id) {
-//             return user;
-//         } else {
-//             console.log('cant find user')
-//         }
-//     });
-// }
+const getUser = (token) => {
+    console.log('GET USER', users);
+
+    const user = users.find((user) => {
+        if (user.token === token) {
+            return true;
+        } else {
+            return false;
+        }
+    });
+    return user
+}
 
 const getUsers = (roomName) => {
+    console.log('GETUSERSSSSSSS', users)
     users.filter((user) => {
         user.roomName === roomName
     });
 }
 
 
-module.exports = { addUser, getUsers }
+module.exports = { addUser, getUsers, getUser }
 
 
 

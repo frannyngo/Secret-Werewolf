@@ -2,81 +2,63 @@ import { Redirect, useLocation } from "react-router-dom";
 import { io } from 'socket.io-client'
 import { useState, useEffect } from "react";
 
-let socket;
+let socket = null;
 
 const Multiplayer = ({ token }) => {
     const [ username, setUsername ] = useState('');
     const [ roomName, setRoomName ] = useState('');
     const [ url, setURL ] = useState('');
     const [ message, setMessage ] = useState();
-    const [ messages, setMessages ] = useState([{ user:'', text:'' }]);
+    const [ messages, setMessages ] = useState([]);
     const ENDPOINT = 'http://localhost:5000';
     const [ isPending, setIsPending ] = useState(false);
-
+    const [ messagesActived, setMA ] = useState(false);
     const location = useLocation();
-    const socket = io(ENDPOINT, {transports: ['websocket'], upgrade: false});
 
 const sendMessage = (e) => {
     e.preventDefault();
     
     if (message) {
-        socket.emit('sendMessage', { user: username, text: message });
+        socket.emit('sendMessage', message, token);
         setMessage('');
     };
 }
 
-// const Ready = (e) => { 
-//     e.preventDefault();
-//     setIsPending(true);
-//     console.log(players)
 
-//     let user = players.find(player => player.id === token)
-
-//     console.log(user);
-
-//     setEverybodyReady([...everybodyReady, user]);
-// }
-
-
-// -----------------------JOIN/DISCONNECT------------------>
 useEffect(() => {
-    const socket = io(ENDPOINT, {transports: ['websocket'], upgrade: false});
-    ;
-    const { name, username, search } = location
-    setUsername(username);
-    setRoomName(name);
-    setURL(search);
 
+    if (!location.username || !location.name || !token) return
 
-    // const newz = players
-    // newz.push({ user: username, id: token }) // <------- create unique players with socket.id 
-    // setPlayers(newz);
-    // console.log(token)
-    // console.log( username )
+    setUsername(location.username);
+    setRoomName(location.name);
+    // setURL(search);
 
-    socket.emit('join', { username, roomName, token }, () => {
+    socket = io(ENDPOINT, {transports: ['websocket'], upgrade: false});
 
+    socket.emit('join', { username: location.username, roomName: location.name, token }, () => {
     });
 
-    socket.on('message', (message) => {
-        const messagez = messages
-        messagez.push({user: message.username, text: message.text })
-        setMessages(messagez);
-        // setMessages([...messages, {user: message.username, text: message.text }]);
-        // console.log(messages);
-    });
-    
     return () => {
-        socket.emit('disconnected', { username })
+        if (!socket) return;
+        socket.disconnect();
         socket.off();
     }
 
-}, [ENDPOINT, location, !username, !roomName, !url, messages, setMessages]);
-
-// -------------SEND MESSAGE/ADD TO MESSAGES--------------->
+}, [location]);
 
 
-// ----------------------------------------->
+useEffect(() => {
+
+    if (!socket) return
+    
+    socket.on('message', (data) => {
+        console.log(data);
+        console.log('aegjroeirgjgjiejg' ,messages)
+        setMessages(m => [...m, data]);
+    });
+    setMA(true);
+    
+}, [])
 
 
     if (!location.name) {

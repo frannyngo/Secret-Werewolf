@@ -10,6 +10,7 @@ const usersRoute = require('./routes/users.js');
 //--------------------SOCKET--------------------------------->
 const { addUser, removeUser, getUser, getUsers } = require('./socketHelpers');
 const http = require('http');
+const { get } = require('./routes/users.js');
 const server = http.createServer(app);
 var io = require('socket.io')(server, {
     cors: {
@@ -21,20 +22,43 @@ var io = require('socket.io')(server, {
 io.on('connection', (socket) => {
 // ------------------JOIN------------------------------------------>
 
-    socket.on('join', ({ username, roomName, token }) => {
-            socket.emit('message', ({ user: 'admin', text: `${username}, welcome to the ${roomName} room!` }));
-            addUser({ username: username, token: token, roomName: roomName})
+    socket.on('join', ({ username, token, roomName }, callback) => {
+        // console.log(username, token, roomName)
+            addUser({ username: username, token: token, roomName: roomName})    
+        
+            if (callback) {
+                callback();
+            }
 
-            socket.emit('message', ({ user:'admin', text:`Players in ${roomName} room : ${getUsers(roomName)}` }));
+            socket.join(roomName)
+
+            io.to(roomName).emit('message', {
+                user: 'Admin',
+                text:  `${username} has joined the ${roomName} room!`,
+                token: token,
+            });
     });
 
 // ------------------DISCONNECT------------------------------------------>
 
-    socket.on('disconnected', (message) => io.emit('message', { user: 'admin', text: message }));
-  
+    socket.on('disconnected', (message) => io.emit('message', { user: 'admin', text: 'user disconnected' }));
+    
 
 // ------------------SEND MESSAGE------------------------------------------>
-    socket.on('sendMessage', (message) => io.emit('message', message));
+    socket.on('sendMessage', (message, token, callback) => {
+        const user = getUser(token)
+        // io.to(user.roomName).emit('message', { user: user.username, text: message});
+
+        io.to(user.roomName).emit('message', {
+            user: user.username,
+            text: message,
+            token: token,
+        });
+
+        if (callback) {
+            callback();
+        }
+});
       
 });
 
