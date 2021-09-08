@@ -10,10 +10,15 @@ const Multiplayer = ({ token }) => {
     const [ message, setMessage ] = useState();
     const [ messages, setMessages ] = useState([]);
     const ENDPOINT = 'http://localhost:5000';
-    const [ isPending, setIsPending ] = useState(false);
     const [ messagesActived, setMA ] = useState(false);
     const location = useLocation();
     const [ usersName, setUsersName ] = useState([]);
+    const [ start, setStart ] = useState(false)
+
+    // game stuff below 
+    const [ werewolf, setWerewolf ] = useState();
+    const [ witch, setWitch ] = useState(); 
+    const [ votes, setVotes ] = useState();
 
 const sendMessage = (e) => {
     e.preventDefault();
@@ -24,6 +29,29 @@ const sendMessage = (e) => {
     };
 }
 
+const Start = (e) => {
+    e.preventDefault();
+    setStart(true)
+    
+    //-----------------------------ASSIGNING ROLES-------------------------------------->
+    
+    const randomWitch = usersName[Math.floor((Math.random() * usersName.length))];
+    setWitch(randomWitch);
+
+    const noWitch = username.filter((user) => {
+        return !user === witch
+    });
+
+    const randomWerewolf = noWitch[Math.floor((Math.random() * noWitch.length))];
+
+    setWitch(randomWerewolf);
+
+    //---------------------------------------------------------------------------------->
+
+
+
+    
+}
 
 useEffect(() => {
 
@@ -84,7 +112,7 @@ useEffect(() => {
                 :
                     <div className="leaderboardzz">
                         <th> 
-                            Username:
+                            Users:
                         </th>
 
                         { usersName.map(( users, key ) => {
@@ -144,8 +172,34 @@ useEffect(() => {
                 </form>                
             </div>
                 
-                { !isPending && <button className="btn btn-background-circle">Ready</button> }
-                { isPending && <button className="btn btn-background-circle" disabled>Waiting for others....</button> }
+            {    
+                usersName.length <= 0?
+
+                <div className='multiplayerCard'>
+                    <p>
+                        Waiting for more players....
+                    </p>
+                </div>
+            :
+                <div className='multiplayerCard'>
+                    {
+                       
+                        !start?
+
+                        <button className="btn btn-background-circle" 
+                            onClick={Start}
+                            >
+                            Ready
+                        </button>
+                        :
+                         <p>
+                             hi
+                         </p>
+
+                    }
+                    
+                </div>
+            }
 
         </div>
     );
