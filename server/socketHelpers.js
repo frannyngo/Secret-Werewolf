@@ -35,8 +35,8 @@ const getUser = (token) => {
 
 const getUsers = (roomName) => {
     console.log('GETUSERSSSSSSS', users)
-    users.filter((user) => {
-        user.roomName === roomName
+    return users.filter((user) => {
+        return user.roomName === roomName
     });
 }
 

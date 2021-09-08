@@ -7,13 +7,13 @@ let socket = null;
 const Multiplayer = ({ token }) => {
     const [ username, setUsername ] = useState('');
     const [ roomName, setRoomName ] = useState('');
-    const [ url, setURL ] = useState('');
     const [ message, setMessage ] = useState();
     const [ messages, setMessages ] = useState([]);
     const ENDPOINT = 'http://localhost:5000';
     const [ isPending, setIsPending ] = useState(false);
     const [ messagesActived, setMA ] = useState(false);
     const location = useLocation();
+    const [ usersName, setUsersName ] = useState([]);
 
 const sendMessage = (e) => {
     e.preventDefault();
@@ -38,6 +38,12 @@ useEffect(() => {
     socket.emit('join', { username: location.username, roomName: location.name, token }, () => {
     });
 
+    socket.on('roomData', ({ room, users }) => {  
+        console.log(users)
+        const annoying = users[0].username
+        usersName.push({ username: annoying })
+    });
+
     return () => {
         if (!socket) return;
         socket.disconnect();
@@ -52,8 +58,6 @@ useEffect(() => {
     if (!socket) return
     
     socket.on('message', (data) => {
-        console.log(data);
-        console.log('aegjroeirgjgjiejg' ,messages)
         setMessages(m => [...m, data]);
     });
     setMA(true);
@@ -72,6 +76,32 @@ useEffect(() => {
 
     return (
         <div className='outerContainer'>
+
+                { !usersName?
+                    <p>
+                        Loadding....
+                    </p>
+                :
+                    <div className="leaderboardzz">
+                        <th> 
+                            Username:
+                        </th>
+
+                        { usersName.map(( users, key ) => {
+                            return (
+                            <tr key={key} className='listusers'>
+                                <td>
+                                    <p>
+                                        {users.username}
+                                    </p>
+                                </td>
+                            </tr>
+                        )})
+                        
+                        }
+                    </div>
+                }
+
             <div className='multiContainer'>
                 <div className='infoBar'>
                     <div className='leftInnerContainer'>

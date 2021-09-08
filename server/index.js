@@ -28,7 +28,7 @@ io.on('connection', (socket) => {
         
             if (callback) {
                 callback();
-            }
+            };
 
             socket.join(roomName)
 
@@ -37,12 +37,17 @@ io.on('connection', (socket) => {
                 text:  `${username} has joined the ${roomName} room!`,
                 token: token,
             });
+
+            io.to(roomName).emit('roomData', {
+                room: roomName,
+                users: getUsers(roomName)
+            });
     });
 
 // ------------------DISCONNECT------------------------------------------>
 
     socket.on('disconnected', (message) => io.emit('message', { user: 'admin', text: 'user disconnected' }));
-    
+
 
 // ------------------SEND MESSAGE------------------------------------------>
     socket.on('sendMessage', (message, token, callback) => {
