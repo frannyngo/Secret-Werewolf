@@ -27,6 +27,13 @@ const Home = ({ token, setToken }) => {
                             </a>
                         </li>
                      </Link>
+                     <Link to='/about'>
+                        <li class='about' data-text='About'>
+                            <a href='#'>
+                                About
+                            </a>
+                        </li>
+                     </Link>
                 </>
                     :
                 <>

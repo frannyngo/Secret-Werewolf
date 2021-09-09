@@ -13,6 +13,9 @@ import InternalStorage from './components/internalStorage';
 import PlayNow from './components/PlayNow';
 import Multiplayer from './components/Multiplayer';
 import Room from './components/Room';
+import About from './components/About';
+import AboutSingle from './components/AboutSingle';
+import AboutMultiplayer from './components/AboutMultiplayer';
 
 // import ChatRoom from './components/ChatRoom'
 // import Contacts from './components/Contacts';
@@ -53,8 +56,17 @@ function App() {
         <Route exact path="/room">
           <Room token={token} />
         </Route>
+         <Route exact path="/about">
+          <About token={token} />
+        </Route>
         <Route exact path="/multiplayer">
           <Multiplayer token={token} />
+        </Route>
+        <Route exact path="/aboutmultiplayer">
+          <AboutMultiplayer token={token} />
+        </Route>
+        <Route exact path="/aboutsingle">
+          <AboutSingle token={token} />
         </Route>
         <Route exact path="/playnow">
           <PlayNow token={token} />

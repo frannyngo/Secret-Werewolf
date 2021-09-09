@@ -67,6 +67,11 @@ const NavBar = ({ token, setToken, inGame }) => {
                             My Account
                         </p> 
                     </Link>
+                    <Link to='/about'>
+                        <p>
+                            About
+                        </p> 
+                    </Link>
 
                     <p
                         onClick={dropToken}> 

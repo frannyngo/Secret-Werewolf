@@ -42,12 +42,13 @@ io.on('connection', (socket) => {
                 room: roomName,
                 users: getUsers(roomName)
             });
+
     });
 
 // ------------------DISCONNECT------------------------------------------>
 
     socket.on('disconnected', (message) => io.emit('message', { user: 'admin', text: 'user disconnected' }));
-
+    
 
 // ------------------SEND MESSAGE------------------------------------------>
     socket.on('sendMessage', (message, token, callback) => {

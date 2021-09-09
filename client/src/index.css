@@ -108,7 +108,7 @@ background-color: rgb(0, 0, 0);
   font-size: 0.9em;
   min-width: 400px;
   padding-left: 120px;
-  margin-top: -80px;
+  margin-top: 0px;
 }
 
 .leaderboardButtons {
@@ -122,8 +122,13 @@ background-color: rgb(0, 0, 0);
   margin: auto;
   width: 50%;
   margin-left: 300px;
-  padding: 10px;
+  padding: 0;
   text-align: left;
+}
+
+.aboutButtons {
+  margin-bottom: 70px;
+  padding: 0;
 }
 
 .profile {
@@ -661,6 +666,91 @@ ul li a:hover::before {
 .title {
 }
 
+.aboutBody {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.slider {
+  width: 800px;
+  height: 500px;
+  border-radius: 10px;
+  overflow: hidden;
+  padding-top: 0;
+}
+
+.slides {
+  width: 500%;
+  height: 500px;
+  display: flex;
+}
+
+.slides input {
+  display: none;
+}
+ 
+.slide {
+  width: 20%;
+  transition: 2s;
+}
+
+.slide img {
+  width: 800px;
+  height: 500px;
+}
+
+.navigation-manual {
+  position: absolute;
+  width: 800px;
+  margin-top: -40px;
+  display: flex;
+  justify-content: center;
+}
+
+.manual-btn {
+  border: 2px solid #40D3DC;
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 1s;
+}
+
+.manual-btn:not(:last-child) {
+  margin-right: 40px;
+}
+
+.manual-btn:hover {
+  background-color: #40D3DC;
+}
+
+#radio1:checked ~ .first {
+  margin-left: 0;
+}
+
+#radio2:checked ~ .first {
+  margin-left: -20%;
+}
+
+#radio3:checked ~ .first {
+  margin-left: -40%;
+}
+
+#radio4:checked ~ .first {
+  margin-left: -60%;
+}
+
+#radio5:checked ~ .first {
+  margin-left: -80%;
+}
+
+#radio6:checked ~ .first {
+  margin-left: -100%;
+}
 
 @keyframes nav-load{
   0% {
