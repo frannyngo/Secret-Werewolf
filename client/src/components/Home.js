@@ -51,13 +51,20 @@ const Home = ({ token, setToken }) => {
                             </a>
                         </li>
                     </Link>
-                    <Link to='/accountdetails'>
+                    {/* <Link to='/accountdetails'>
                         <li class='maccount' data-text="My Account">
                             <a href='#'>
                                 My Account
                             </a>
                         </li>
-                    </Link>
+                    </Link> */}
+                    <Link to='/about'>
+                        <li class='about' data-text='About'>
+                            <a href='#'>
+                                About
+                            </a>
+                        </li>
+                     </Link>
                         <li class='signout' data-text="Sign Out" onClick={dropToken}>
                             <a href='#'>
                                 Sign Out

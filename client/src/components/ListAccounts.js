@@ -1,9 +1,13 @@
 import React, { useEffect, useState} from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import axios from 'axios';
 
 const AccountShowList = ({ token }) => {
 
-    const [accounts, setAccounts] = useState([]);
+    const [ accounts, setAccounts ] = useState([]);
+    const [ accountsGames, setAccountsGames ] = useState([]);
+    const [ accountsKills, setAccountsKills ] = useState([]);
+    const [ userData, setUserData ] = useState();
 
     const getAccounts = async() => {
         try {
@@ -16,54 +20,55 @@ const AccountShowList = ({ token }) => {
         }
     };
 
-    const Redirect = (e) => {
-        e.preventDefault()
-        const gettingAccounts = async() => {
-            try {
-                const response = await fetch('http://localhost:5000/leaderboard');
-                const jsonData = await response.json();
-    
-                setAccounts(jsonData);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        gettingAccounts();
-    };
-
-    const KillList= (e) => {
-        e.preventDefault()
         const SubmitKills = async() => {
                 try {
                     const response = await fetch('http://localhost:5000/leaderboard/kills');
                     const jsonData = await response.json();
         
-                    setAccounts(jsonData);
+                    setAccountsKills(jsonData);
                 } catch (error) {
                     console.log(error);
                 }
         };
-        SubmitKills();
-    };
 
-    const GameList= (e) => {
-        e.preventDefault()
+
+
         const SubmitGames = async() => {
             try {
                 const response = await fetch('http://localhost:5000/leaderboard/games');
                 const jsonData = await response.json();
 
-                setAccounts(jsonData);
+                setAccountsGames(jsonData);
             } catch (error) {
                 console.log(error);
             }
         };
-        SubmitGames();
-    };
+
 
     useEffect(() => {
         getAccounts();
+        SubmitGames();
+        SubmitKills();
+
+        axios.post('http://localhost:5000/accounts/me', {
+            token: token,
+        }).then(response => {
+            setUserData(response.data);
+        })
+
     }, []);
+
+    useEffect(() => {
+        axios.post('http://localhost:5000/accounts/me', {
+            token: token,
+        }).then(response => {
+            setUserData(response.data);
+        })
+    }, [])
+
+    if (!userData) {
+        return <p> Loading.. </p>
+    }
 
     if (!token) {
         return <Redirect to='/' />
@@ -71,44 +76,13 @@ const AccountShowList = ({ token }) => {
 
     return (
     <div className='leaderboardPage'>
-        <div className='leaderboardButtons'>
-            <button className="btn btn-background-circle"
-                onClick={Redirect}
-                >
-                Wins 
-            </button>
-            &nbsp;&nbsp;
-            <button className="btn btn-background-circle"
-                onClick={KillList}
-                >
-                Kills
-            </button>
-            &nbsp;&nbsp;
-            <button className="btn btn-background-circle"
-                onClick={GameList}
-                >
-                Games
-            </button>
-        </div>
 
-        <div className="leaderboards">
+        <div className="leaderboards1">
             <th> 
-                Username:
+                Win Leaders
             </th>
-            <th>
-                Games:
-            </th>
-            <th>
-                Wins:
-            </th>
-            <th>
-                Win%:
-            </th>
-            <th>
-                Kills:
-            </th>
-            <th>
-                Kills/Round:
+            <th> 
+                &emsp;
             </th>
             <tbody>
                 {accounts.map(account => (
@@ -124,27 +98,7 @@ const AccountShowList = ({ token }) => {
                     </td>
                     <td>
                         <p>
-                            {account.total_games}
-                        </p>
-                    </td>
-                    <td>
-                        <p>
                             {account.total_wins}
-                        </p>
-                    </td>
-                    <td>
-                        <p>
-                            {(account.total_wins/account.total_games * 100).toFixed(1)}
-                        </p>
-                    </td>
-                    <td>
-                        <p>
-                            {account.total_kills}
-                        </p>
-                    </td>
-                    <td>
-                        <p>
-                            {(account.total_kills/account.total_games).toFixed(1)}
                         </p>
                     </td>
                 </tr> 
@@ -152,6 +106,130 @@ const AccountShowList = ({ token }) => {
                 }
             </tbody>
         </div>
+
+        <div className="leaderboards2">
+            <th> 
+                Game Leaders
+            </th>
+            <th> 
+                &emsp;
+            </th>
+            <tbody>
+                {accountsGames.map(acc => (
+                <tr className="leaderboard-accounts" 
+                    key={acc.account_id}
+                    >
+                    <td> 
+                        <Link to={`/accounts/${acc.account_id}`}>
+                            <p>
+                                {acc.username} 
+                            </p> 
+                        </Link>
+                    </td>
+                    <td>
+                        <p>
+                            {acc.total_games}
+                        </p>
+                    </td>
+                </tr> 
+                ))
+                }
+            </tbody>
+        </div>
+
+        <div className="leaderboards3">
+            <th> 
+                Kill Leaders
+            </th>
+            <th> 
+                &emsp;
+            </th>
+            <tbody>
+                {accountsKills.map(ac => (
+                <tr className="leaderboard-accounts" 
+                    key={ac.account_id}
+                    >
+                    <td> 
+                        <Link to={`/accounts/${ac.account_id}`}>
+                            <p>
+                                {ac.username} 
+                            </p> 
+                        </Link>
+                    </td>
+                    <td>
+                        <p>
+                            {ac.total_kills}
+                        </p>
+                    </td>
+                </tr> 
+                ))
+                }
+            </tbody>
+        </div>
+
+        <div className="leaderboardsme">
+            <th> 
+                {userData.username}
+            </th>
+            <tbody>
+                
+                <tr className="leaderboard-accounts-me" >
+                    <tr>
+                        <td> 
+                            Games
+                        </td>
+                    
+                        <td>
+                            <p>
+                                {userData.total_games || '0' }
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> 
+                            Wins
+                        </td>
+                        <td>
+                            <p>
+                                {userData.total_wins || '0' }
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> 
+                            Wins% 
+                        </td>
+                        <td>
+                            <p>
+                                {(userData.total_wins/userData.total_games * 100).toFixed(1) || "0"}
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> 
+                            Kills 
+                        </td>
+                        <td>
+                            <p>
+                                {userData.total_kills || "Insufficient Data"}
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> 
+                            Kill/Game 
+                        </td>
+                        <td>
+                            <p>
+                                {(userData.total_kills/userData.total_games).toFixed(1) || "Insufficient Data"}
+                            </p>
+                        </td>
+                    </tr>
+                </tr> 
+
+            </tbody>
+        </div>
+
     </div>
     );
 }

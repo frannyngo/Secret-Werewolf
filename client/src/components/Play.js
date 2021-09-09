@@ -29,8 +29,8 @@ import P6morndead from './img/p6morndead.png';
 const Play = ({ token, inGame, setInGame, setWin, setUserKills, userKills }) => {
 
     const [ userData, setUserData ] = useState();
-    const [ nightPhase, setNightPhase ] = useState(false);
-    const [ morningPhase, setMorningPhase ] = useState(true);
+    const [ nightPhase, setNightPhase ] = useState(true);
+    const [ morningPhase, setMorningPhase ] = useState(false);
     const [ disabled, setDisabled ] = useState(false);
     const [ playersRemaining, setPlayersRemaining ] = useState(['Simon', 'Shaemus', 'Linda', 'Ed', 'Dana', 'Alfred']);
     const [ witch, setWitch ] = useState();
@@ -459,12 +459,12 @@ const Play = ({ token, inGame, setInGame, setWin, setUserKills, userKills }) => 
                                 morningPhase?
                                     <img src={P5morndead} alt='pl' />
                                 :
-                                    <img src={P5dead} alt='player 1' />
+                                    <img src={P4dead} alt='player 1' />
                             :   
                                 morningPhase?
                                     <img src={P5morning} alt='player1' />
                                 :
-                                    <img src={P5moon} alt='player 1 dead' />
+                                    <img src={P4moon} alt='player 1 dead' />
                             }                        
                         </div>
                         <div className='description'>
@@ -495,12 +495,12 @@ const Play = ({ token, inGame, setInGame, setWin, setUserKills, userKills }) => 
                                     morningPhase?
                                     <img src={P4morndead} alt='pl' />
                                 :
-                                    <img src={P4dead} alt='player 1' />
+                                    <img src={P5dead} alt='player 1' />
                             :   
                                 morningPhase?
                                     <img src={P4morning} alt='player1' />
                                 :
-                                    <img src={P4moon} alt='player 1 dead' />
+                                    <img src={P5moon} alt='player 1 dead' />
                             }                        
                         </div>
                         <div className='description'>

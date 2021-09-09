@@ -1,6 +1,9 @@
 import { Redirect, useLocation } from "react-router-dom";
 import { io } from 'socket.io-client'
 import { useState, useEffect } from "react";
+import ReactScrollableFeed from 'react-scrollable-feed';
+import MultiWitch from './img/multiWitch.png';
+import MultiElmininatedWitch from './img/mutliEliminatedWitch.png';
 
 let socket = null;
 
@@ -35,16 +38,16 @@ const Start = (e) => {
     
     //-----------------------------ASSIGNING ROLES-------------------------------------->
     
-    const randomWitch = usersName[Math.floor((Math.random() * usersName.length))];
-    setWitch(randomWitch);
+    // const randomWitch = usersName[Math.floor((Math.random() * usersName.length))];
+    // setWitch(randomWitch);
 
-    const noWitch = username.filter((user) => {
-        return !user === witch
-    });
+    // const noWitch = username.filter((user) => {
+    //     return !user === witch
+    // });
 
-    const randomWerewolf = noWitch[Math.floor((Math.random() * noWitch.length))];
+    // const randomWerewolf = noWitch[Math.floor((Math.random() * noWitch.length))];
 
-    setWitch(randomWerewolf);
+    // setWitch(randomWerewolf);
 
     //---------------------------------------------------------------------------------->
 
@@ -66,12 +69,6 @@ useEffect(() => {
     socket.emit('join', { username: location.username, roomName: location.name, token }, () => {
     });
 
-    socket.on('roomData', ({ room, users }) => {  
-        console.log(users)
-        const annoying = users[0].username
-        usersName.push({ username: annoying })
-    });
-
     return () => {
         if (!socket) return;
         socket.disconnect();
@@ -89,6 +86,14 @@ useEffect(() => {
         setMessages(m => [...m, data]);
     });
     setMA(true);
+
+    socket.on('roomData', ({ room, data }) => {  
+        console.log(data)
+        data.forEach(u => {
+            console.log('INSIDE LOOP ', u.username)
+            setUsersName(un => [...un, u.username])
+        })
+    });
     
 }, [])
 
@@ -115,12 +120,12 @@ useEffect(() => {
                             Users:
                         </th>
 
-                        { usersName.map(( users, key ) => {
+                        { usersName.map(( username, key ) => {
                             return (
                             <tr key={key} className='listusers'>
                                 <td>
                                     <p>
-                                        {users.username}
+                                        {username}
                                     </p>
                                 </td>
                             </tr>
@@ -138,6 +143,7 @@ useEffect(() => {
                         </h3>
                     </div>
                 </div>
+                    <ReactScrollableFeed>
                         { 
                         messages.map((message, i) => {
                         return (    
@@ -155,7 +161,7 @@ useEffect(() => {
                                 }
                             ) 
                         }
-    
+                    </ReactScrollableFeed>
                 <form className='formz'>
                     <input className='inputz'
                         value={message}
@@ -173,7 +179,7 @@ useEffect(() => {
             </div>
                 
             {    
-                usersName.length <= 0?
+                usersName.length <= 7?
 
                 <div className='multiplayerCard'>
                     <p>
@@ -192,12 +198,37 @@ useEffect(() => {
                             Ready
                         </button>
                         :
-                         <p>
-                             hi
-                         </p>
-
+                        <>
+                            <div className='multibtns' height='10px'>
+                                <button>
+                                    trishaT
+                                </button>
+                                &emsp;&emsp;
+                                <button>
+                                    Aguilar
+                                </button>
+                                &emsp;&emsp;
+                                <button>
+                                    LT
+                                </button>
+                                &emsp;&emsp;
+                                <button>
+                                    Julez
+                                </button>
+                                &emsp;&emsp;
+                                <button>
+                                    DNCA
+                                </button>
+                                &emsp;&emsp;
+                                <button>
+                                    gersh
+                                </button>
+                            </div>
+                            <div className='multiimage'>
+                                <img src={MultiWitch} alt='single' width='380px;' height='380px'/>
+                            </div>
+                        </>
                     }
-                    
                 </div>
             }
 

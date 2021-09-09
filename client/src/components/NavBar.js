@@ -62,11 +62,11 @@ const NavBar = ({ token, setToken, inGame }) => {
                             Leaderboard 
                         </p>
                     </Link>
-                    <Link to='/accountdetails'>
+                    {/* <Link to='/accountdetails'>
                         <p>
                             My Account
                         </p> 
-                    </Link>
+                    </Link> */}
                     <Link to='/about'>
                         <p>
                             About

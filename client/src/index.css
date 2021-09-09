@@ -17,6 +17,101 @@ background-color: rgb(0, 0, 0);
   padding: 10px;
   text-align: center;
 }
+/* -------------------------> */
+.leaderboardPage {
+  display: flex;
+  justify-content: center;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  
+}
+
+.leaderboards1 {
+  border: 2px solid rgba(255, 255, 255, 0.801);
+  margin: 100px 50px 5px 5px;
+}
+
+.leaderboards1 th {
+  background: rgb(165, 108, 211);
+}
+
+
+.leaderboards1 tr:nth-child(even):hover {
+  background-color: rgb(149, 75, 219);
+  color: white;
+}
+
+.leaderboards1 tr:nth-child(odd):hover {
+  background-color: rgb(175, 122, 224);
+  color: white;
+}
+
+/* -------------------------> */
+
+.leaderboards2 {
+  border: 2px solid rgba(255, 255, 255, 0.801);
+  margin: 100px 50px 5px 5px;
+}
+
+.leaderboards2 th {
+  background: rgb(94, 177, 98);
+}
+
+.leaderboards2 tr:nth-child(even):hover {
+  background-color: rgb(66, 184, 91);
+  color: white;
+}
+
+.leaderboards2 tr:nth-child(odd):hover {
+  background-color: rgb(68, 161, 49);
+  color: white;
+}
+
+/* -------------------------> */
+
+.leaderboards3 {
+  border: 2px solid rgba(255, 255, 255, 0.801);
+  margin: 100px 50px 5px 5px;
+}
+
+.leaderboards3 th {
+  background: rgb(106, 197, 240);
+}
+
+.leaderboards3 tr:nth-child(even):hover {
+  background-color: rgb(74, 188, 241);
+  color: white;
+}
+
+.leaderboards3 tr:nth-child(odd):hover {
+  background-color: rgb(52, 138, 179);
+  color: white;
+}
+
+/* -------------------------> */
+
+.leaderboardsme {
+  border: 2px solid rgba(255, 255, 255, 0.801);
+  margin: 186px 50px 5px 5px;
+
+}
+
+.leaderboardsme th {
+  background: rgb(226, 179, 79);
+}
+
+.leaderboardsme tr:nth-child(even):hover {
+  background-color: rgb(223, 179, 84);
+  color: white;
+}
+
+.leaderboardsme tr:nth-child(odd):hover {
+  background-color: rgb(206, 158, 54);
+  color: white;
+}
+
+/* -------------------------> */
 
 
 .navbar {
@@ -131,6 +226,10 @@ background-color: rgb(0, 0, 0);
   padding: 0;
 }
 
+.aboutButtons button {
+  width: 100px;
+}
+
 .profile {
   display: flex;
   justify-content: center;
@@ -139,18 +238,27 @@ background-color: rgb(0, 0, 0);
   align-items: center;
 }
 
-.leaderboards {
-  padding-left: 350px;
-  padding-top: 30px;
-}
 
 .leaderboardzz {
   padding: 20px;
 }
 
 .multiplayerCard {
-  padding: 150px;
-  margin-left: 150px;
+  padding: 0px;
+  margin-left: 50px;
+}
+
+.multibtns button {
+  border-radius: 5px;
+  color: white;
+  background-color: rgb(68, 64, 64);
+  height: 40px;
+  width: 70px;
+}
+
+.multibtns {
+  margin-left: -30px;
+  margin-bottom: 10px;
 }
 
 label {
@@ -466,17 +574,24 @@ td {
   word-wrap: break-word;
 }
 
+.multiimage {
+  padding: 0;
+}
 
+.multicard {
+
+}
 
 
  .messageContainer {
   display: flex;
-  padding: 0px 0px;
+  padding: 1px 0px;
   margin-top: 0px;
+  flex-direction: column;
 }
 
 .sentText {
-  padding: 1px 1px;
+  padding: 5px 1px;
   color: white;
   margin-left: 5%;
 } 
@@ -501,6 +616,7 @@ ul {
 ul li {
   list-style: none;
   align-items: center;
+  text-align: center;
 }
 
 ul li:before {
@@ -536,6 +652,8 @@ ul li a {
   overflow: hidden;
   transition: 0.5s;
   z-index: 1;
+  width: 155px;
+  height: 22px;
 }
 
 ul:hover li a {

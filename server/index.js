@@ -40,7 +40,7 @@ io.on('connection', (socket) => {
 
             io.to(roomName).emit('roomData', {
                 room: roomName,
-                users: getUsers(roomName)
+                data: getUsers(roomName)
             });
 
     });
