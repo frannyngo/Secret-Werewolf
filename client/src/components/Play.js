@@ -148,8 +148,8 @@ const Play = ({ token, inGame, setInGame, setWin, setUserKills, userKills }) => 
                                 highestReoccurence += 1
                             }
                     })
-
-                    if (highestReoccurence > 1) {
+// asdf
+//                     if (highestReoccurence > 1) {
                         setConsoleLog(`Players are tied for votes, there will be no execution today!`);
                         ShowAlert();
                     }
